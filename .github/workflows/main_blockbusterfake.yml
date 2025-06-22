@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy JAR app to Azure Web App - blockbusterfake
+name: Build and deploy WAR app to Azure Web App - blockbusterfake
 
 on:
   push:
@@ -21,7 +21,7 @@ jobs:
       - name: Set up Java version
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'microsoft'
 
       - name: Build with Maven
@@ -31,7 +31,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: java-app
-          path: '${{ github.workspace }}/target/*.jar'
+          path: '${{ github.workspace }}/target/*.war'
 
   deploy:
     runs-on: ubuntu-latest
@@ -40,7 +40,7 @@ jobs:
     permissions:
       id-token: write #This is required for requesting the JWT
       contents: read #This is required for actions/checkout
-  
+
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
@@ -50,9 +50,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_551E3FA263CF43CB86F10B490B0BF63A }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_485439FA30704048A8DD15DC53C775DD }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_A0808EEDC2E94B9D9533DA87A282654B }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_CF4EB60C210A454591A341B11E60DE1F }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_695834024E3149389990F2398776445D }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_186F82B3ED524E91B4B0C79451D50654 }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
@@ -60,5 +60,5 @@ jobs:
         with:
           app-name: 'blockbusterfake'
           slot-name: 'Production'
-          package: '*.jar'
+          package: '*.war'
           
