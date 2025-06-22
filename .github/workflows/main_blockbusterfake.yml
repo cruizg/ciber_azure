@@ -30,8 +30,8 @@ jobs:
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
-          name: java-app
-          path: '${{ github.workspace }}/target/*.war'
+          name: t2
+          path: '${{ github.workspace }}/target/*.jar'
 
   deploy:
     runs-on: ubuntu-latest
@@ -45,7 +45,7 @@ jobs:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
-          name: java-app
+          name: t2
       
       - name: Login to Azure
         uses: azure/login@v2
@@ -60,5 +60,5 @@ jobs:
         with:
           app-name: 'blockbusterfake'
           slot-name: 'Production'
-          package: '*.war'
+          package: '*.jar'
           
